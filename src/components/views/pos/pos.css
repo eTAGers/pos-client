@@ -1,0 +1,17 @@
+.cardPorducts {
+    background-color: ghostwhite !important;
+}
+
+.cardPorducts:hover {
+    background-color: white !important;
+    color: black;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+::-webkit-scrollbar-track {
+    background-color:gray;
+    /* border-radius: 10px; */
+}
