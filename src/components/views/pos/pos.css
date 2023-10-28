@@ -1,0 +1,47 @@
+.cardPorducts {
+    background-color: ghostwhite !important;
+    height: 120px;
+    /* margin: 1em 1em 1em 1em;  */
+}
+
+.cardPorducts:hover {
+    background-color: white !important;
+    color: black;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+::-webkit-scrollbar-track {
+    background-color:gray;
+    /* border-radius: 10px; */
+}
+
+.productName{
+    color: #000;
+    font-weight: bold;
+}
+.productCost{
+    color: red;
+}
+.ttlPrc{
+    font-size: 24px;
+    font-weight: bold;
+}
+.quantityInfo{
+    font-size: 12px;
+}
+.printBtn {
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    border-right-color: rgba(25, 118, 210, 0.5) !important;
+}
+.saveBtn{
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    border-left-color: rgba(25, 118, 210, 0.5) !important;
+}
+.printBtn:hover,.saveBtn:hover{
+    color: #000;
+}
