@@ -20,7 +20,7 @@ import CommonTable from "../common/CommonTable";
 import { ETaction, ETTypes } from "../common/Types";
 
 function Product(props) {
-  var userData = JSON.parse(sessionStorage.getItem("userData"))
+  var userData = JSON.parse(sessionStorage.getItem("userData"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const confirm = useConfirm();
@@ -85,8 +85,7 @@ function Product(props) {
       field: "storeName",
       align: "center",
       type: ETTypes.string,
-    }
-    ,
+    },
     {
       title: "Product",
       field: "productName",
@@ -96,6 +95,12 @@ function Product(props) {
     {
       title: "Code",
       field: "productCode",
+      align: "center",
+      type: ETTypes.string,
+    },
+    {
+      title: "Stock",
+      field: "productQty",
       align: "center",
       type: ETTypes.string,
     },
@@ -149,45 +154,49 @@ function Product(props) {
             p: "20px",
             display: matches && "flex",
             justifyContent: "space-between",
-          }}>
+          }}
+        >
           <Paper
-            component='form'
+            component="form"
             sx={{
               p: "2px 4px",
               marginBottom: "20px",
               display: "flex",
               alignItems: "center",
               width: matches ? 300 : 200,
-            }}>
+            }}
+          >
             <InputBase
               sx={{ ml: 1, flex: 1 }}
-              placeholder='Search'
+              placeholder="Search"
               onChange={(e) => {
                 getProduct(e.target.value);
               }}
               inputProps={{ "aria-label": "search google maps" }}
             />
-            <IconButton type='button' sx={{ p: "10px" }} aria-label='search'>
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
               <SearchIcon />
             </IconButton>
           </Paper>
           <Stack spacing={2} direction={matches ? "row" : "column"}>
-            <Button sx={{ height: 50 }} variant='contained'>
+            <Button sx={{ height: 50 }} variant="contained">
               <CSVLink
                 filename={"Products.csv"}
                 style={{ color: "white" }}
                 data={product}
-                headers={headers}>
+                headers={headers}
+              >
                 Export Products
               </CSVLink>
             </Button>
-            <Button sx={{ height: 50 }} variant='contained'>
+            <Button sx={{ height: 50 }} variant="contained">
               Import Products
             </Button>
             <Button
               sx={{ height: 50 }}
               onClick={createProduct}
-              variant='contained'>
+              variant="contained"
+            >
               Create Products
             </Button>
           </Stack>
