@@ -4,7 +4,7 @@ let APIKit = {
   get: (url) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(`https://relieved-kilt-fly.cyclic.app${url}`, {
+        .get(`http://localhost:8500${url}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getJWT()}`,
@@ -21,7 +21,7 @@ let APIKit = {
   post: (url, payload) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(`https://relieved-kilt-fly.cyclic.app${url}`, payload, {
+        .post(`http://localhost:8500${url}`, payload, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getJWT()}`,
@@ -38,7 +38,7 @@ let APIKit = {
   put: (url, payload) => {
     return new Promise((resolve, reject) => {
       axios
-        .put(`https://relieved-kilt-fly.cyclic.app${url}`, payload, {
+        .put(`http://localhost:8500${url}`, payload, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getJWT()}`,
@@ -55,7 +55,7 @@ let APIKit = {
   delete: (url) => {
     return new Promise((resolve, reject) => {
       axios
-        .delete(`https://relieved-kilt-fly.cyclic.app${url}`, {
+        .delete(`http://localhost:8500${url}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getJWT()}`,
