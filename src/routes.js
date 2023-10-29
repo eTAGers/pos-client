@@ -23,6 +23,7 @@ import SalesList from "./components/views/sale/SalesList";
 import SalesNew from "./components/views/sale/SalesNew";
 import SalesTableFormat from "./components/views/sale/SalesTableFormat";
 import Store from "./components/views/store/Store";
+import PO from "./components/views/PO";
 
 const routes = [
   {
@@ -51,7 +52,8 @@ const routes = [
       { path: "profile", element: <MyProfile /> },
       { path: "customer", element: <CustomerList /> },
       { path: "invoice", element: <Invoice /> },
-      { path: "invoiceList", element: <InvoiceList /> }
+      { path: "invoiceList", element: <InvoiceList /> },
+      { path: "PO", element: <PO /> },
     ],
   },
   {

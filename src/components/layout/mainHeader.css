@@ -13,9 +13,10 @@
     width: calc(100% - 290px);
     position: fixed;
     top: 0;
-    background: #f0eff1;
+    background: #1e293b;
     left:270px ;
     z-index: 900;
+    color: #fff !important;
   }
   body.layout-4 .navbar {
     left: auto;
@@ -37,4 +38,17 @@
     padding: 10px 20px;
     cursor: pointer;
         line-height: 1.2;
-        font-size: 13px;}
+        font-size: 13px;
+      }
+
+  .main-sidebar  {
+    background-color: #1e293b;
+  }
+  .nav-link, .sidebar-brand a, .dropdown a,  .dropdown-menu .nav-link:hover {
+    color: #fff !important;
+   
+  }
+  .nav-link:hover {
+    color: #000 !important;
+  }
+ 

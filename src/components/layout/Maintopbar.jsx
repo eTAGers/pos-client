@@ -131,14 +131,10 @@ export default function MainHeader() {
               </li>
 
               <li className="dropdown">
-                <a
-                  href="#"
-                  data-toggle="dropdown"
-                  className="nav-link dropdown-toggle"
-                >
+                <a href="#" className="nav-link  has-dropdown">
                   <i className="fas fa-columns"></i> <span>Product</span>
                 </a>
-                <div className="dropdown-menu dropdown-menu-right">
+                <ul className="dropdown-menu">
                   {productSubMenu.map((txt, i) => {
                     return (
                       <>
@@ -153,17 +149,13 @@ export default function MainHeader() {
                       </>
                     );
                   })}
-                </div>
+                </ul>
               </li>
               <li className="dropdown">
-                <a
-                  href="#"
-                  data-toggle="dropdown"
-                  className="nav-link dropdown-toggle"
-                >
+                <a href="#" className="nav-link  has-dropdown">
                   <i className="fas fa-th"></i> <span>Sales</span>
                 </a>
-                <div className="dropdown-menu dropdown-menu-right">
+                <ul className="dropdown-menu">
                   {salesSubMenu.map((txt, i) => {
                     return (
                       <>
@@ -178,7 +170,7 @@ export default function MainHeader() {
                       </>
                     );
                   })}
-                </div>
+                </ul>
               </li>
               {userData.storeID === 0 && (
                 <li className="dropdown">
@@ -202,6 +194,12 @@ export default function MainHeader() {
                 <RouterLink to={"/app/invoiceList/"} className="nav-link">
                   <i className="far fa-user"></i>
                   <span>Invoice List</span>
+                </RouterLink>
+              </li>
+              <li className="dropdown">
+                <RouterLink to={"/app/PO/"} className="nav-link">
+                  <i className="far fa-user"></i>
+                  <span>PO</span>
                 </RouterLink>
               </li>
             </ul>

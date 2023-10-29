@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     height: "100%",
-    overflow: "hidden",
+    // overflow: "hidden",
     // width: "100%",
     width: "calc(100% - 315px)",
     left: "265px",

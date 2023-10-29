@@ -17,12 +17,12 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import MenuIcon from "@mui/icons-material/Menu";
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import ReorderIcon from '@mui/icons-material/Reorder';
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import ReorderIcon from "@mui/icons-material/Reorder";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import StarBorder from "@mui/icons-material/StarBorder";
 import StoreIcon from "@mui/icons-material/Store";
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -126,6 +126,7 @@ export default function Topbar() {
     { path: "/app/invoiceList/", title: "Invoice List" },
     { path: "/app/invoice/", title: "Invoice" },
     { path: "/app/customer/", title: "Customer List" },
+    { path: "/app/PO/", title: "Purchase Order" },
   ];
 
   const [title, setTitle] = React.useState({ path: "", title: "" });
@@ -299,7 +300,7 @@ export default function Topbar() {
           <ListItem key={"Dashboard"} disablePadding>
             <RouterLink to={"/app/dashboard/"}>
               <ListItemButton
-              onClick={handleDrawerClose}
+                onClick={handleDrawerClose}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -340,7 +341,11 @@ export default function Topbar() {
                   return (
                     <>
                       <RouterLink to={`/app/${txt.route}/`}>
-                        <List onClick={handleDrawerClose} component="div" disablePadding>
+                        <List
+                          onClick={handleDrawerClose}
+                          component="div"
+                          disablePadding
+                        >
                           <ListItemButton sx={{ pl: 4 }}>
                             <ListItemIcon>
                               <StarBorder />
@@ -370,7 +375,11 @@ export default function Topbar() {
                   return (
                     <>
                       <RouterLink to={`/app/${txt.route}/`}>
-                        <List onClick={handleDrawerClose} component="div" disablePadding>
+                        <List
+                          onClick={handleDrawerClose}
+                          component="div"
+                          disablePadding
+                        >
                           <ListItemButton sx={{ pl: 4 }}>
                             <ListItemIcon>
                               <StarBorder />
@@ -474,7 +483,7 @@ export default function Topbar() {
           <ListItem key={"Customer"} disablePadding>
             <RouterLink to={"/app/customer/"}>
               <ListItemButton
-              onClick={handleDrawerClose}
+                onClick={handleDrawerClose}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -500,7 +509,7 @@ export default function Topbar() {
           <ListItem key={"Invoice"} disablePadding>
             <RouterLink to={"/app/invoice/"}>
               <ListItemButton
-              onClick={handleDrawerClose}
+                onClick={handleDrawerClose}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -526,7 +535,7 @@ export default function Topbar() {
           <ListItem key={"Invoice List"} disablePadding>
             <RouterLink to={"/app/invoiceList/"}>
               <ListItemButton
-              onClick={handleDrawerClose}
+                onClick={handleDrawerClose}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -546,6 +555,29 @@ export default function Topbar() {
                   primary="Invoice List"
                   sx={{ opacity: open ? 1 : 0 }}
                 />
+              </ListItemButton>
+            </RouterLink>
+          </ListItem>
+          <ListItem key={"PO"} disablePadding>
+            <RouterLink to={"/app/PO/"}>
+              <ListItemButton
+                onClick={handleDrawerClose}
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReorderIcon />
+                </ListItemIcon>
+                <ListItemText primary="PO" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </RouterLink>
           </ListItem>
