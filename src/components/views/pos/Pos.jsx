@@ -5,11 +5,14 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SearchIcon from "@mui/icons-material/Search";
 import { Grid } from "@mui/material";
+import Tabs, { tabsClasses } from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 import FormControl from "@mui/material/FormControl";
@@ -36,6 +39,10 @@ import APIKit from "../../utilities/APIKIT";
 import { MESSAGE } from "../../utilities/constant";
 import { URLS } from "../../utilities/URLS";
 import "./pos.css";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 function Pos(props) {
   const { enqueueSnackbar } = useSnackbar();
   var variant = "";
@@ -43,8 +50,8 @@ function Pos(props) {
   const customStyles = {
     control: (base) => ({
       ...base,
-      height: 45,
-      minHeight: 55,
+      height: 35,
+      minHeight: 35,
     }),
     option: (styles, { isFocused, isSelected }) => ({
       ...styles,
@@ -222,7 +229,7 @@ function Pos(props) {
         });
       }
     }
-  }, [customerList]);
+  }, [customerDetails, customerList]);
   const createCustomer = async () => {
     const pay = { ...customerDetails };
     delete pay.customerID;
@@ -527,318 +534,38 @@ function Pos(props) {
     printWindow.document.close();
     printWindow.print();
   };
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <div id="pos">
       <Grid container spacing={3} p={1}>
-        <Grid item sm={12} md={4}>
-          <Grid container spacing={2}>
-            <Grid item sm={12} md={4}>
-              <TextField
-                autoComplete="off"
-                id="outlined-basic"
-                label="Mobile Number"
-                name="mobileNO"
-                variant="outlined"
-                onChange={(e) => {
-                  setCustomerDetails({
-                    ...customerDetails,
-                    mobileNo: e.target.value.trim(),
-                  });
-                }}
-                onBlur={() => {
-                  if (customerDetails.mobileNo !== "") {
-                    checkCust();
-                  }
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    checkCust();
-                  }
-                }}
-                value={customerDetails.mobileNo}
-              />
-            </Grid>
-            <Grid item sm={12} md={4}>
-              <TextField
-                autoComplete="off"
-                id="outlined-basic"
-                label="Enter Customer Name"
-                name="name"
-                variant="outlined"
-                onChange={(e) => {
-                  setCustomerDetails({
-                    ...customerDetails,
-                    name: e.target.value,
-                  });
-                }}
-                value={customerDetails.name}
-                disabled={isDis}
-              />
-            </Grid>
-            <Grid item sm={12} md={4}>
-              <TextField
-                autoComplete="off"
-                id="outlined-basic"
-                label="City"
-                name="city"
-                onChange={(e) => {
-                  setCustomerDetails({
-                    ...customerDetails,
-                    city: e.target.value,
-                  });
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    createCustomer();
-                  }
-                }}
-                onBlur={createCustomer}
-                value={customerDetails.city}
-                variant="outlined"
-                disabled={isDis}
-              />
-            </Grid>
-            <Grid item sm={12} xs={12} sx={{ overflow: "hidden" }}>
-              <Card sx={{ minHeight: 535 }}>
-                <Paper sx={{ width: "100%", overflow: "hidden" }}>
-                  <TableContainer
-                    sx={{ maxHeight: 0, ...(!matches && { maxWidth: 300 }) }}
-                    component={Paper}
-                  >
-                    <Table stickyHeader aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell></TableCell>
-                          <TableCell align="center"> Product</TableCell>
-                          <TableCell align="center">Quantity</TableCell>
-                          <TableCell align="center">Price</TableCell>
-                          <TableCell align="center">Sub Total</TableCell>
-                          <TableCell align="center">Action</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {salesData.length ? (
-                          salesData.map((row, i) => (
-                            <TableRow
-                              key={row.productID}
-                              sx={{
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }}
-                            >
-                              <TableCell>
-                                <Checkbox
-                                  style={{
-                                    transform: "scale(0.75)",
-                                  }}
-                                  color="primary"
-                                  checked={row.isDiscount}
-                                  onChange={() => {
-                                    let item = [...salesData];
-                                    item[i].isDiscount = !item[i].isDiscount;
-                                    setSalesData([...item]);
-                                  }}
-                                  inputProps={{
-                                    "aria-label": "select all desserts",
-                                  }}
-                                />
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row.productName}
-                              </TableCell>
-                              <TableCell align="center">
-                                <FormGroup
-                                  sx={{
-                                    whiteSpace: "nowrap",
-                                    display: "unset",
-                                  }}
-                                >
-                                  <Button
-                                    disabled={row.productQty <= 1}
-                                    variant="text"
-                                    sx={{ mt: 1, minWidth: "10px" }}
-                                    onClick={() => {
-                                      let item = [...salesData];
-                                      item[i].productQty =
-                                        Number(item[i].productQty) - 1;
-                                      setSalesData([...item]);
-                                    }}
-                                  >
-                                    <RemoveIcon />
-                                  </Button>
-                                  <TextField
-                                    variant="outlined"
-                                    style={{ width: 50, height: "1px" }}
-                                    name={`productQty${i}`}
-                                    onBlur={() => {
-                                      let item = [...salesData];
-                                      row.productQty === 0
-                                        ? (item[i].productQty = Number(1))
-                                        : (item[i].productQty = Number(
-                                            row.productQty
-                                          ));
-                                      setSalesData([...item]);
-                                    }}
-                                    value={row.productQty}
-                                    onChange={(e) => {
-                                      let item = [...salesData];
-                                      item[i].productQty = Number(
-                                        e.target.value
-                                      );
-                                      setSalesData([...item]);
-                                    }}
-                                    // autoFocus={
-                                    //   `productQty${i}` ===
-                                    //   editableKeyToFocus.current
-                                    // }
-                                  />
-                                  <Button
-                                    variant="text"
-                                    sx={{ mt: 1, minWidth: "10px" }}
-                                    onClick={() => {
-                                      let item = [...salesData];
-                                      item[i].productQty =
-                                        Number(item[i].productQty) + 1;
-                                      setSalesData([...item]);
-                                    }}
-                                  >
-                                    <AddIcon />
-                                  </Button>
-                                </FormGroup>
-                              </TableCell>
-                              <TableCell align="center">
-                                {row.productCost}
-                              </TableCell>
-                              <TableCell align="center">
-                                {Number(row.productCost) *
-                                  Number(row.productQty)}
-                              </TableCell>
-                              <TableCell align="center">
-                                <DeleteIcon
-                                  onClick={() => {
-                                    let item = [...salesData];
-                                    item.splice(i, 1);
-                                    setSalesData([...item]);
-                                  }}
-                                />
-                              </TableCell>
-                            </TableRow>
-                          ))
-                        ) : (
-                          <TableRow hover role="checkbox" key={1}>
-                            <TableCell colSpan={6} align="center" key={2}>
-                              {"No Data Found"}
-                            </TableCell>
-                          </TableRow>
-                        )}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Paper>
-                <Box sx={{ backgroundColor: "aliceblue", p: 2 }}>
-                  <Grid container spacing={2}>
-                    <Grid item sm={12} md={6}>
-                      <FormControl sx={{ m: 1 }}>
-                        <InputLabel htmlFor="outlined-adornment-amount">
-                          Discount
-                        </InputLabel>
-                        <OutlinedInput
-                          id="outlined-adornment-amount"
-                          endAdornment={
-                            <InputAdornment position="end">%</InputAdornment>
-                          }
-                          label="Discount"
-                          value={details.discount}
-                          onChange={(e) => {
-                            setDetails({
-                              ...details,
-                              discount: e.target.value,
-                            });
-                          }}
-                        />
-                      </FormControl>
-                      <FormControl sx={{ m: 1 }}>
-                        <InputLabel htmlFor="outlined-adornment-amount">
-                          Packing Cost
-                        </InputLabel>
-                        <OutlinedInput
-                          id="outlined-adornment-amount"
-                          endAdornment={
-                            <InputAdornment position="end">Rs</InputAdornment>
-                          }
-                          value={details.packingCharge}
-                          label="Packing Cost"
-                          onChange={(e) => {
-                            setDetails({
-                              ...details,
-                              packingCharge: e.target.value,
-                            });
-                          }}
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item sm={12} md={6}>
-                      <Box>
-                        <Typography>
-                          Total Qty:{" "}
-                          {salesData.reduce(
-                            (a, b) => Number(b.productQty) + a,
-                            0
-                          )}
-                        </Typography>
-                        <Typography>
-                          Sub Total:{" "}
-                          {salesData.reduce(
-                            (a, b) =>
-                              Number(b.productCost) * Number(b.productQty) + a,
-                            0
-                          )}
-                        </Typography>
-                        <Typography>
-                          Total:{" "}
-                          {salesData.reduce(
-                            (a, b) =>
-                              Number(b.productCost) * Number(b.productQty) + a,
-                            0
-                          ) -
-                            salesData
-                              .filter((e) => e.isDiscount)
-                              .reduce(
-                                (a, b) =>
-                                  Number(b.productCost) * Number(b.productQty) +
-                                  a,
-                                0
-                              ) *
-                              (Number(details.discount) / 100) +
-                            Number(details.packingCharge)}{" "}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ButtonGroup
-                      variant="outlined"
-                      aria-label="outlined button group"
-                    >
-                      <Button onClick={saveSales}>Save</Button>
-                      <Button onClick={print}>Print</Button>
-                    </ButtonGroup>
-                  </Box>
-                </Box>
-              </Card>
-            </Grid>
-          </Grid>
-        </Grid>
         <Grid item sm={12} md={8} sx={{ overflow: "hidden" }}>
           <Grid container spacing={2}>
-            <Grid item sm={12} md={11}>
+            <Grid item sm={12} md={12}>
+              <Grid container spacing={2}>
+                <Grid item sm={12} md={6}>
+                  <ArrowBackIcon
+                    onClick={() => {
+                      navigate("/app/dashboard/", { replace: true });
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  sm={12}
+                  md={6}
+                  alignContent={"flex-end"}
+                  display={"flex"}
+                  justifyContent={"flex-end"}
+                >
+                  <FullscreenIcon onClick={openFullscreen} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item sm={12} md={12}>
               <Select
                 styles={customStyles}
                 menuPortalTarget={document.body}
@@ -855,19 +582,78 @@ function Pos(props) {
                 })}
               />
             </Grid>
-            <Grid item sm={12} md={1}>
-              <FullscreenIcon onClick={openFullscreen} />
-              <ArrowBackIcon
-                onClick={() => {
-                  navigate("/app/dashboard/", { replace: true });
-                }}
-              />
-            </Grid>
             <Grid item sm={12} md={12}>
-              <Card sx={{ minHeight: 535, backgroundColor: "aliceblue" }}>
-                <Grid container spacing={2} p={1}>
+              <Card sx={{ minHeight: 135, backgroundColor: "aliceblue" }}>
+                <Grid container spacing={1} p={1}>
                   <Grid item sm={12} md={12}>
                     <Box
+                      sx={{
+                        flexGrow: 1,
+                        maxWidth: { xs: "100%", sm: "100%" },
+                        bgcolor: "background.paper",
+                      }}
+                    >
+                      <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
+                        aria-label="visible arrows tabs example"
+                        sx={{
+                          [`& .${tabsClasses.scrollButtons}`]: {
+                            "&.Mui-disabled": { opacity: 0.3 },
+                          },
+                        }}
+                      >
+                        <Tooltip title={"All"}>
+                          <Tab
+                            color="primary"
+                            sx={{ whiteSpace: "nowrap" }}
+                            onClick={() => getProduct()}
+                            label="All"
+                          />
+                        </Tooltip>
+                        {productCategoryData.map((e, index) => {
+                          return (
+                            <Tooltip
+                              title={
+                                userData.storeID === 0
+                                  ? e.productCategoryName +
+                                    "(" +
+                                    e.storeName +
+                                    ")"
+                                  : e.productCategoryName
+                              }
+                            >
+                              <Tab
+                                color={e.active ? "primary" : "secondary"}
+                                sx={{ whiteSpace: "nowrap" }}
+                                onClick={() => {
+                                  let items = [...productCategoryData];
+                                  for (let i = 0; i < items.length; i++) {
+                                    items[i].active = false;
+                                  }
+                                  items[index].active = true;
+
+                                  setProductCategoryData([...items]);
+                                  getProductByCategory(e.productCategoryID);
+                                }}
+                                label={
+                                  userData.storeID === 0
+                                    ? e.productCategoryName +
+                                      "(" +
+                                      e.storeName +
+                                      ")"
+                                    : e.productCategoryName
+                                }
+                              />
+                            </Tooltip>
+                          );
+                        })}
+                      </Tabs>
+                    </Box>
+                    {/* <Box
                       sx={{
                         p: 2,
                         borderRadius: 4,
@@ -884,7 +670,7 @@ function Pos(props) {
                         </Grid>
                         {productCategoryData.map((e, index) => {
                           return (
-                            <Grid item sm={6} md={1.5}>
+                            <Grid item sm={6} md={4}>
                               <Tooltip
                                 title={
                                   userData.storeID === 0
@@ -922,14 +708,16 @@ function Pos(props) {
                           );
                         })}
                       </Grid>
-                    </Box>
+                    </Box> */}
                   </Grid>
-                  <Box sx={{ p: 3 }}>
+                  {/* <Grid item sm={12} md={12}>
+                    <Box sx={{ p: 3 }}>
                     <TextField
                       label="Search"
                       onChange={(e) => {
                         getProduct(e.target.value);
-                      }}
+                      }} 
+                      sx ={{width: '100%'}}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment>
@@ -939,16 +727,17 @@ function Pos(props) {
                       }}
                     />
                   </Box>
+                  </Grid> */}
                   <Grid
                     item
                     sm={12}
                     md={12}
-                    style={{ maxHeight: 490, overflowY: "scroll" }}
+                    style={{ maxHeight: "75vh", overflowY: "scroll" }}
                   >
                     <Grid container spacing={2}>
                       {productCard.map((e) => {
                         return (
-                          <Grid item sm={12} md={3} lg={2}>
+                          <Grid item sm={12} md={3} lg={3}>
                             <Card
                               onClick={() => {
                                 matchProductCard(e);
@@ -1005,6 +794,480 @@ function Pos(props) {
                     </Grid>
                   </Grid>
                 </Grid>
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item sm={12} md={4}>
+          <Grid container spacing={2}>
+            <Grid item sm={12} md={12}>
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Select Customer</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    <Grid container spacing={2}>
+                      <Grid item sm={12} md={4}>
+                        <TextField
+                          autoComplete="off"
+                          id="standard-basic"
+                          label="Mobile Number"
+                          name="mobileNO"
+                          variant="standard"
+                          onChange={(e) => {
+                            setCustomerDetails({
+                              ...customerDetails,
+                              mobileNo: e.target.value.trim(),
+                            });
+                          }}
+                          onBlur={() => {
+                            if (customerDetails.mobileNo !== "") {
+                              checkCust();
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              checkCust();
+                            }
+                          }}
+                          value={customerDetails.mobileNo}
+                        />
+                      </Grid>
+                      <Grid item sm={12} md={4}>
+                        <TextField
+                          autoComplete="off"
+                          id="standard-basic"
+                          label="Customer Name"
+                          name="name"
+                          variant="standard"
+                          onChange={(e) => {
+                            setCustomerDetails({
+                              ...customerDetails,
+                              name: e.target.value,
+                            });
+                          }}
+                          value={customerDetails.name}
+                          disabled={isDis}
+                        />
+                      </Grid>
+                      <Grid item sm={12} md={4}>
+                        <TextField
+                          autoComplete="off"
+                          id="standard-basic"
+                          label="City"
+                          name="city"
+                          onChange={(e) => {
+                            setCustomerDetails({
+                              ...customerDetails,
+                              city: e.target.value,
+                            });
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              createCustomer();
+                            }
+                          }}
+                          onBlur={createCustomer}
+                          value={customerDetails.city}
+                          variant="standard"
+                          disabled={isDis}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+
+            <Grid item sm={12} xs={12} sx={{ overflow: "hidden" }}>
+              <Card sx={{ minHeight: 535, height: "100%" }}>
+                <CardContent>
+                  {" "}
+                  <Paper
+                    sx={{ width: "100%", overflow: "hidden", height: "50vh" }}
+                  >
+                    <TableContainer
+                      sx={{
+                        maxHeight: "100%",
+                        ...(!matches && { maxWidth: 300 }),
+                      }}
+                      component={Paper}
+                    >
+                      <Table stickyHeader aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            {/* <TableCell></TableCell> */}
+                            <TableCell
+                              align="center"
+                              sx={{ backgroundColor: "#1976d2", color: "#fff" }}
+                            >
+                              {" "}
+                              Product
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ backgroundColor: "#1976d2", color: "#fff" }}
+                            >
+                              Quantity
+                            </TableCell>
+                            {/* <TableCell align="center">Price</TableCell> */}
+                            <TableCell
+                              align="center"
+                              sx={{ backgroundColor: "#1976d2", color: "#fff" }}
+                            >
+                              Total
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ backgroundColor: "#1976d2", color: "#fff" }}
+                            >
+                              Action
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {salesData.length ? (
+                            salesData.map((row, i) => (
+                              <TableRow
+                                key={row.productID}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                {/* <TableCell>
+                                <Checkbox
+                                  style={{
+                                    transform: "scale(0.75)",
+                                  }}
+                                  color="primary"
+                                  checked={row.isDiscount}
+                                  onChange={() => {
+                                    let item = [...salesData];
+                                    item[i].isDiscount = !item[i].isDiscount;
+                                    setSalesData([...item]);
+                                  }}
+                                  inputProps={{
+                                    "aria-label": "select all desserts",
+                                  }}
+                                />
+                              </TableCell> */}
+                                <TableCell component="th" scope="row">
+                                  <div className="productName">
+                                    {row.productName}
+                                  </div>
+                                  <div className="productCost">
+                                    Rs {row.productCost}
+                                  </div>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <FormGroup
+                                    sx={{
+                                      whiteSpace: "nowrap",
+                                      display: "flex",
+                                      flexDirection: "row",
+                                      alignContent: "center",
+                                      alignItems: "center",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <Button
+                                      disabled={row.productQty <= 1}
+                                      variant="text"
+                                      sx={{ minWidth: "10px" }}
+                                      onClick={() => {
+                                        let item = [...salesData];
+                                        item[i].productQty =
+                                          Number(item[i].productQty) - 1;
+                                        setSalesData([...item]);
+                                      }}
+                                    >
+                                      <RemoveIcon sx={{ width: "14px" }} />
+                                    </Button>
+                                    <p>{row.productQty}</p>
+                                    {/* <TextField
+                                    variant="outlined"
+                                    style={{ width: 50, height: "1px" }}
+                                    name={`productQty${i}`}
+                                    onBlur={() => {
+                                      let item = [...salesData];
+                                      row.productQty === 0
+                                        ? (item[i].productQty = Number(1))
+                                        : (item[i].productQty = Number(
+                                            row.productQty
+                                          ));
+                                      setSalesData([...item]);
+                                    }}
+                                    value={row.productQty}
+                                    onChange={(e) => {
+                                      let item = [...salesData];
+                                      item[i].productQty = Number(
+                                        e.target.value
+                                      );
+                                      setSalesData([...item]);
+                                    }}
+                                    // autoFocus={
+                                    //   `productQty${i}` ===
+                                    //   editableKeyToFocus.current
+                                    // }
+                                  /> */}
+                                    <Button
+                                      variant="text"
+                                      sx={{ minWidth: "10px" }}
+                                      onClick={() => {
+                                        let item = [...salesData];
+                                        item[i].productQty =
+                                          Number(item[i].productQty) + 1;
+                                        setSalesData([...item]);
+                                      }}
+                                    >
+                                      <AddIcon sx={{ width: "14px" }} />
+                                    </Button>
+                                  </FormGroup>
+                                </TableCell>
+                                {/* <TableCell align="center">
+                                {row.productCost}
+                              </TableCell> */}
+                                <TableCell align="center">
+                                  {Number(row.productCost) *
+                                    Number(row.productQty)}
+                                </TableCell>
+                                <TableCell align="center">
+                                  <DeleteIcon
+                                    sx={{ width: "14px" }}
+                                    onClick={() => {
+                                      let item = [...salesData];
+                                      item.splice(i, 1);
+                                      setSalesData([...item]);
+                                    }}
+                                  />
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          ) : (
+                            <TableRow hover role="checkbox" key={1}>
+                              <TableCell colSpan={6} align="center" key={2}>
+                                {"No Data Found"}
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Paper>
+                </CardContent>{" "}
+                <CardActions>
+                  <Box sx={{ backgroundColor: "aliceblue", p: 2 }}>
+                    <Grid container spacing={2}>
+                      <Grid item sm={12} md={6}>
+                        <FormControl sx={{ m: 1 }}>
+                          <InputLabel
+                            htmlFor="outlined-adornment-amount"
+                            sx={{ fontSize: "14px", top: "-5px" }}
+                          >
+                            Discount
+                          </InputLabel>
+                          <OutlinedInput
+                            id="outlined-adornment-amount"
+                            endAdornment={
+                              <InputAdornment position="end">%</InputAdornment>
+                            }
+                            label="Discount"
+                            sx={{ height: "40px" }}
+                            value={details.discount}
+                            onChange={(e) => {
+                              setDetails({
+                                ...details,
+                                discount: e.target.value,
+                              });
+                            }}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item sm={12} md={6}>
+                        <FormControl sx={{ m: 1 }}>
+                          <InputLabel
+                            htmlFor="outlined-adornment-amount"
+                            sx={{ fontSize: "14px", top: "-5px" }}
+                          >
+                            Packing Cost
+                          </InputLabel>
+                          <OutlinedInput
+                            id="outlined-adornment-amount"
+                            endAdornment={
+                              <InputAdornment position="end">Rs</InputAdornment>
+                            }
+                            value={details.packingCharge}
+                            label="Packing Cost"
+                            sx={{ height: "40px" }}
+                            onChange={(e) => {
+                              setDetails({
+                                ...details,
+                                packingCharge: e.target.value,
+                              });
+                            }}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item sm={12} md={12}>
+                        <Box sx={{ m: 2 }}>
+                          <Grid container spacing={2}>
+                            <Grid sm={6} md={6}>
+                              <Typography>
+                                <div className="subTtlPrc">Sub Total</div>
+                                <div className="quantityInfo">
+                                  (Quantity:{" "}
+                                  {salesData.reduce(
+                                    (a, b) => Number(b.productQty) + a,
+                                    0
+                                  )}
+                                  )
+                                </div>
+                              </Typography>
+                            </Grid>
+
+                            <Grid sm={6} md={6}>
+                              <Typography
+                                sx={{ textAlign: "right", fontSize: "14px" }}
+                              >
+                                {" "}
+                                {salesData.reduce(
+                                  (a, b) =>
+                                    Number(b.productCost) *
+                                      Number(b.productQty) +
+                                    a,
+                                  0
+                                )}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                        <Box sx={{ m: 2 }}>
+                          <Grid container spacing={2}>
+                            <Grid sm={6} md={6}>
+                              <Typography>
+                                <div className="ttlPrc">Total</div>
+                              </Typography>
+                            </Grid>
+                            <Grid sm={6} md={6}>
+                              <Typography
+                                sx={{
+                                  textAlign: "right",
+                                  fontWeight: "bold",
+                                  fontSize: "24px",
+                                }}
+                              >
+                                {" "}
+                                {salesData.reduce(
+                                  (a, b) =>
+                                    Number(b.productCost) *
+                                      Number(b.productQty) +
+                                    a,
+                                  0
+                                ) -
+                                  salesData
+                                    .filter((e) => e.isDiscount)
+                                    .reduce(
+                                      (a, b) =>
+                                        Number(b.productCost) *
+                                          Number(b.productQty) +
+                                        a,
+                                      0
+                                    ) *
+                                    (Number(details.discount) / 100) +
+                                  Number(details.packingCharge)}{" "}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                          {/* <Typography>
+                            Total Qty:{" "}
+                            {salesData.reduce(
+                              (a, b) => Number(b.productQty) + a,
+                              0
+                            )}
+                          </Typography>
+                          <Typography>
+                            Sub Total:{" "}
+                            {salesData.reduce(
+                              (a, b) =>
+                                Number(b.productCost) * Number(b.productQty) +
+                                a,
+                              0
+                            )}
+                          </Typography>
+                          <Typography>
+                            Total:{" "}
+                            {salesData.reduce(
+                              (a, b) =>
+                                Number(b.productCost) * Number(b.productQty) +
+                                a,
+                              0
+                            ) -
+                              salesData
+                                .filter((e) => e.isDiscount)
+                                .reduce(
+                                  (a, b) =>
+                                    Number(b.productCost) *
+                                      Number(b.productQty) +
+                                    a,
+                                  0
+                                ) *
+                                (Number(details.discount) / 100) +
+                              Number(details.packingCharge)}{" "}
+                          </Typography> */}
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <ButtonGroup
+                        variant="outlined"
+                        aria-label="outlined button group"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          width: "100%",
+                        }}
+                      >
+                        <Button
+                          onClick={print}
+                          sx={{
+                            width: "48%",
+                            background: "#1976d2",
+                            color: "#fff",
+                          }}
+                          className="printBtn"
+                        >
+                          Print
+                        </Button>
+                        <Button
+                          onClick={saveSales}
+                          sx={{
+                            width: "48%",
+                            background: "#1976d2",
+                            color: "#fff",
+                          }}
+                          className="saveBtn"
+                        >
+                          Save
+                        </Button>
+                      </ButtonGroup>
+                    </Box>
+                  </Box>
+                </CardActions>
               </Card>
             </Grid>
           </Grid>

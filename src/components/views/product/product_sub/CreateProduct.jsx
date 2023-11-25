@@ -66,7 +66,7 @@ export default function CreateProduct() {
           productCode: "",
           productCategory: "",
           // brand: "",
-          // productQty: "",
+          productQty: "",
           productCost: "",
           productCategoryName: "",
           brandName: "",
@@ -100,7 +100,7 @@ export default function CreateProduct() {
           productCode: "",
           productCategory: "",
           // brand: "",
-          // productQty: "",
+          productQty: "",
           productCost: "",
           productCategoryName: "",
           brandName: "",
@@ -121,7 +121,7 @@ export default function CreateProduct() {
         productCode: productData.productCode,
         productCategory: productData.productCategory,
         // brand: productData.brand,
-        // productQty: productData.productQty,
+        productQty: productData.productQty,
         productCost: productData.productCost,
         productCategoryName: productData.productCategoryName,
         brandName: productData.brandName,
@@ -135,7 +135,7 @@ export default function CreateProduct() {
     productCode: "",
     productCategory: "",
     // brand: "",
-    // productQty: "",
+    productQty: "",
     productCost: "",
     productCategoryName: "",
     brandName: "",
@@ -151,18 +151,20 @@ export default function CreateProduct() {
           p: "20px",
           display: "flex",
           justifyContent: "space-between",
-        }}>
+        }}
+      >
         <Typography
-          color='black'
+          color="black"
           gutterBottom
-          variant='h6'
+          variant="h6"
           sx={{
             p: "2px 4px",
             marginBottom: "20px",
             display: "flex",
             alignItems: "center",
             width: 200,
-          }}>
+          }}
+        >
           Create Product
         </Typography>
 
@@ -171,7 +173,8 @@ export default function CreateProduct() {
             height: 50,
           }}
           onClick={back}
-          variant='contained'>
+          variant="contained"
+        >
           Back
         </Button>
       </Box>
@@ -179,14 +182,15 @@ export default function CreateProduct() {
         <Box
           sx={{
             p: 4,
-          }}>
+          }}
+        >
           <Formik
             initialValues={{ ...payload }}
             enableReinitialize={true}
             validationSchema={Yup.object().shape({
               productName: Yup.string().required(MESSAGE.productName),
               productCode: Yup.string().required(MESSAGE.productCode),
-              // productQty: Yup.number().required(MESSAGE.quantity),
+              productQty: Yup.number().required(MESSAGE.quantity),
               productCost: Yup.number().required(MESSAGE.cost),
             })}
             onSubmit={(values) => {
@@ -196,7 +200,8 @@ export default function CreateProduct() {
               } else {
                 createProduct();
               }
-            }}>
+            }}
+          >
             {({
               errors,
               handleBlur,
@@ -206,9 +211,9 @@ export default function CreateProduct() {
               touched,
               values,
             }) => (
-              <form autoComplete='off' onSubmit={handleSubmit}>
+              <form autoComplete="off" onSubmit={handleSubmit}>
                 <Grid container spacing={4}>
-                <Grid item md={4} sm={12}>
+                  <Grid item md={4} sm={12}>
                     <TextField
                       error={Boolean(
                         touched.productCode && errors.productCode && (
@@ -225,11 +230,11 @@ export default function CreateProduct() {
                           productCode: e.target.value,
                         });
                       }}
-                      id='outlined-basic'
-                      label='Product Code'
-                      name='productCode'
+                      id="outlined-basic"
+                      label="Product Code"
+                      name="productCode"
                       fullWidth
-                      variant='outlined'
+                      variant="outlined"
                     />
                   </Grid>
                   <Grid item md={4} sm={12}>
@@ -248,19 +253,18 @@ export default function CreateProduct() {
                           productName: e.target.value,
                         });
                       }}
-                      id='outlined-basic'
-                      label='Enter Product Name'
-                      name='productName'
+                      id="outlined-basic"
+                      label="Enter Product Name"
+                      name="productName"
                       fullWidth
                       value={payload.productName}
-                      variant='outlined'
+                      variant="outlined"
                     />
                   </Grid>
-                  
 
                   <Grid item md={4} sm={12}>
                     <Autocomplete
-                      id='combo-box-demo'
+                      id="combo-box-demo"
                       isOptionEqualToValue={(option, value) =>
                         option.productCategoryID === value.productCategoryID
                       }
@@ -290,11 +294,11 @@ export default function CreateProduct() {
                         <TextField
                           sx={!matches && { width: 170 }}
                           {...params}
-                          label='Product Category'
+                          label="Product Category"
                         />
                       )}
-                      name='productCategory'
-                      variant='outlined'
+                      name="productCategory"
+                      variant="outlined"
                     />
                   </Grid>
                   {/* <Grid item md={4} sm={12}>
@@ -336,14 +340,14 @@ export default function CreateProduct() {
                       variant="outlined"
                     />
                   </Grid> */}
-                  {/* <Grid item md={4} sm={12}>
+                  <Grid item md={4} sm={12}>
                     <TextField
-                      id='outlined-basic'
-                      label='Quantity'
-                      name='productQty'
+                      id="outlined-basic"
+                      label="Quantity"
+                      name="productQty"
                       value={payload.productQty}
                       fullWidth
-                      variant='outlined'
+                      variant="outlined"
                       error={Boolean(
                         touched.productQty && errors.productQty && (
                           <div>{errors.productQty}</div>
@@ -364,7 +368,7 @@ export default function CreateProduct() {
                         }
                       }}
                     />
-                  </Grid> */}
+                  </Grid>
                   <Grid item mdOffset={4} md={4} sm={12}>
                     <TextField
                       error={Boolean(
@@ -387,11 +391,11 @@ export default function CreateProduct() {
                         }
                       }}
                       value={payload.productCost}
-                      id='outlined-basic'
-                      label='Enter Product Cost'
-                      name='productCost'
+                      id="outlined-basic"
+                      label="Enter Product Cost"
+                      name="productCost"
                       fullWidth
-                      variant='outlined'
+                      variant="outlined"
                     />
                   </Grid>
                   <Button
@@ -399,8 +403,9 @@ export default function CreateProduct() {
                       marginLeft: "auto",
                       mt: 2,
                     }}
-                    type='submit'
-                    variant='contained'>
+                    type="submit"
+                    variant="contained"
+                  >
                     {isEdit ? "Update" : "Save"}
                   </Button>
                 </Grid>

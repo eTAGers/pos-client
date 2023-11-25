@@ -21,10 +21,67 @@ wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- General CSS Files -->
+    <link
+      rel="stylesheet"
+      href="/assets/modules/bootstrap/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="/assets/modules/fontawesome/css/all.min.css" />
+
+    <!-- CSS Libraries -->
+    <!-- <link rel="stylesheet" href="./assets/modules/jqvmap/dist/jqvmap.min.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/modules/summernote/summernote-bs4.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css"
+    /> -->
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/css/style.min.css" />
+    <link rel="stylesheet" href="/assets/css/components.min.css" />
+
     <title>POS</title>
   </head>
-  <body style="background-color: #EFF3F7 !important;">
+  <body class="layout-4">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+      <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <!-- <body style="background-color: #EFF3F7 !important;"> -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- General JS Scripts -->
+    <script src="/assets/bundles/lib.vendor.bundle.js"></script>
+    <script src="/js/CodiePie.js"></script>
+
+    <!-- JS Libraies -->
+    <script src="/assets/modules/jquery.sparkline.min.js"></script>
+    <script src="/assets/modules/chart.min.js"></script>
+    <script src="/assets/modules/owlcarousel2/dist/owl.carousel.min.js"></script>
+    <script src="/assets/modules/summernote/summernote-bs4.js"></script>
+    <script src="/assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+
+    <!-- Page Specific JS File -->
+    <script src="/js/page/index.js"></script>
+
+    <!-- Template JS File -->
+    <script src="/js/scripts.js"></script>
+    <script src="/js/custom.js"></script>
   </body>
 </html>

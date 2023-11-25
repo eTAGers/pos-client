@@ -13,6 +13,6 @@ export const MESSAGE = {
   noProducts: "No Products Selected",
   mobNo: "Mobile Number should be 10 number",
   profile: "Profile Updated Successfully",
-  pass: "Password Updated Successfully"
-
+  pass: "Password Updated Successfully",
+  dealer: "Dealer is required",
 };

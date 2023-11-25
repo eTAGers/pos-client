@@ -1,0 +1,54 @@
+.sticky{
+    position: fixed !important;
+    top: 70px;
+    left: 290px !important;
+    width: calc(100% - 315px);
+    padding: 20px 0;
+    animation: slide 0.3s;
+    box-shadow: 0 0 7px 3px #f6f8f9;
+    background: #fff;
+    z-index: 9;
+  }
+  body.layout-4 nav.navbar.navbar-expand-lg.main-navbar {
+    width: calc(100% - 290px);
+    position: fixed;
+    top: 0;
+    background: #1e293b;
+    left:270px ;
+    z-index: 900;
+    color: #fff !important;
+  }
+  body.layout-4 .navbar {
+    left: auto;
+  }
+  body.layout-4 .main-footer{
+    position: fixed;
+    bottom: 0;
+    left:290px;
+    width: calc(100% - 315px);
+    background: #f0eff1;
+  }
+  a.MuiTab-root{
+  font-family: var(--bs-body-font-family);
+  text-transform: capitalize;}
+  a.MuiTab-root:hover{
+    text-decoration: none;
+  }
+  .dropdown-menu p{
+    padding: 10px 20px;
+    cursor: pointer;
+        line-height: 1.2;
+        font-size: 13px;
+      }
+
+  .main-sidebar  {
+    background-color: #1e293b;
+  }
+  .nav-link, .sidebar-brand a, .dropdown a,  .dropdown-menu .nav-link:hover {
+    color: #fff !important;
+   
+  }
+  .nav-link:hover {
+    color: #000 !important;
+  }
+ 

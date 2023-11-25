@@ -1,26 +1,10 @@
 import React, { useState } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import { useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { useSnackbar } from "notistack";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import * as Yup from "yup";
-import { Formik } from "formik";
-import { MESSAGE } from "../../utilities/constant";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
 import APIKit from "../../utilities/APIKIT";
 import { URLS } from "../../utilities/URLS";
-import FormHelperText from '@mui/material/FormHelperText';
+import "./Login.css";
 
 function Login(props) {
   const navigate = useNavigate();
@@ -32,7 +16,9 @@ function Login(props) {
   const { enqueueSnackbar } = useSnackbar();
   var variant = "";
   const anchorOrigin = { horizontal: "right", vertical: "bottom" };
-  const loginApi = async () => {
+  const loginApi = async (e) => {
+    e.preventDefault();
+
     await APIKit.post(URLS.login, payload).then((res) => {
       if (res.data.message === "Successfully Login") {
         variant = "success";
@@ -60,168 +46,47 @@ function Login(props) {
     event.preventDefault();
   };
   return (
-    <div>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          p: 6,
-        }}
-      >
-        <Formik
-          initialValues={{ ...payload }}
-          validationSchema={Yup.object().shape({
-            userName: Yup.string().required(MESSAGE.name),
-            password: Yup.string().max(30).required(MESSAGE.password),
-          })}
-          onSubmit={(values) => {
-            // same shape as initial values
-            loginApi();
-          }}
-        >
-          {({
-            errors,
-            handleBlur,
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-            touched,
-            values,
-          }) => (
-            <form autoComplete="off" onSubmit={handleSubmit}>
-              <Card sx={{ maxWidth: 500, borderRadius: 5 }}>
-                <Box
-                  sx={{
-                    p: 8,
-                  }}
-                >
-                  <CardContent>
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        //   fontSize: 18,
-                        display: "flex",
-                        justifyContent: "center",
-                        //   color: "black",
-                      }}
-                      color="black"
-                      gutterBottom
-                    >
-                      Sign In
-                    </Typography>
-                  </CardContent>
-                  <TextField
-                    error={Boolean(
-                      touched.userName && errors.userName && (
-                        <div>{errors.userName}</div>
-                      )
-                    )}
-                    helperText={touched.userName && errors.userName}
-                    onBlur={handleBlur}
-                    value={payload.userName}
-                    onChange={(e) => {
-                      handleChange(e);
-                      setPayload({
-                        ...payload,
-                        userName: e.target.value.trim(),
-                      });
-                    }}
-                    sx={{ mt: 2, mb: 2, width: matches ? 400 : "auto" }}
-                    id="outlined-basic"
-                    label="User Name"
-                    name="userName"
-                    variant="outlined"
-                  />
-                  <FormControl variant="outlined"
-                  error={Boolean(touched.password && errors.password)}>
-                    <InputLabel htmlFor="outlined-adornment-password">
-                      Password
-                    </InputLabel>
-                    <OutlinedInput
-                      name="password"
-                      sx={{ width: matches ? 400 : "auto" }}
-                      id="outlined-adornment-password"
-                      type={showPassword ? "text" : "password"}
-                      inputProps={{
-                        autocomplete: "new-password",
-                        form: {
-                          autocomplete: "off",
-                        },
-                      }}
-                      // error={Boolean(
-                      //   touched.password && errors.password && (
-                      //     <div>{errors.password}</div>
-                      //   )
-                      // )}
-                      value={payload.password}
-                      // helperText={touched.password && errors.password}
-                      onChange={(e) => {
-                        handleChange(e);
-                        setPayload({
-                          ...payload,
-                          password: e.target.value.trim(),
-                        });
-                      }}
-                      fullWidth
-                      onBlur={handleBlur}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Password"
-                    />
-                    <FormHelperText>{(errors.password && touched.password) && errors.password}</FormHelperText>
-                  </FormControl>
-                  {/* <TextField
-                    error={Boolean(
-                      touched.password && errors.password && (
-                        <div>{errors.password}</div>
-                      )
-                    )}
-                    value={payload.password}
-                    helperText={touched.password && errors.password}
-                    onBlur={handleBlur}
-                    onChange={(e) => {
-                      handleChange(e);
-                      setPayload({
-                        ...payload,
-                        password: e.target.value.trim(),
-                      });
-                    }}
-                    sx={{ mt: 5, width: matches ? 400 : "auto" }}
-                    id='outlined-password-input'
-                    label='Password'
-                    type='password'
-                    name='password'
-                    autoComplete='current-password'
-                  /> */}
-                  <Button
-                    sx={{
-                      mt: 5,
-                      width: matches ? 400 : 150,
-                      height: 40,
-                      borderRadius: 3,
-                    }}
-                    type="submit"
-                    variant="contained"
-                  >
-                    Login
-                  </Button>
-                </Box>
-              </Card>
+    <>
+      <div className="loginScreen">
+        <div className="container" id="container">
+          <div className="form-container sign-in">
+            <form onSubmit={loginApi}>
+              <h1>Sign In</h1>
+              <span>Please sign in to access the system.</span>
+              <input
+                onChange={(e) => {
+                  setPayload({
+                    ...payload,
+                    userName: e.target.value.trim(),
+                  });
+                }}
+                type="test"
+                placeholder="User Name"
+              />
+              <input
+                onChange={(e) => {
+                  setPayload({
+                    ...payload,
+                    password: e.target.value.trim(),
+                  });
+                }}
+                type="password"
+                placeholder="Password"
+              />
+              <button type="submit">Sign In</button>
             </form>
-          )}
-        </Formik>
-      </Box>
-    </div>
+          </div>
+          <div className="toggle-container">
+            <div className="toggle">
+              <div className="toggle-panel toggle-right">
+                <h1>Hello, Friend!</h1>
+                <p>Unlock the power of our POS system with your details!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

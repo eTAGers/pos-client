@@ -1,72 +1,76 @@
 import { Icon } from "@iconify/react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import PaymentIcon from "@mui/icons-material/Payment";
-import PhoneIcon from '@mui/icons-material/Phone';
+import PhoneIcon from "@mui/icons-material/Phone";
 import ShopIcon from "@mui/icons-material/Shop";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import {
-  Table, TableBody,
-  TableCell, tableCellClasses, TableContainer, TableHead,
+  Table,
+  TableBody,
+  TableCell,
+  tableCellClasses,
+  TableContainer,
+  TableHead,
   TablePagination,
   TableRow,
-  TextField
+  TextField,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import React from "react";
 import { EEditable, ETaction, ETTypes } from "./Types";
 import { dateFormate } from "./utilities";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
   width: 42,
   height: 26,
   padding: 0,
-  '& .MuiSwitch-switchBase': {
+  "& .MuiSwitch-switchBase": {
     padding: 0,
     margin: 2,
-    transitionDuration: '300ms',
-    '&.Mui-checked': {
-      transform: 'translateX(16px)',
-      color: '#fff',
-      '& + .MuiSwitch-track': {
-        backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
+    transitionDuration: "300ms",
+    "&.Mui-checked": {
+      transform: "translateX(16px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
         opacity: 1,
         border: 0,
       },
-      '&.Mui-disabled + .MuiSwitch-track': {
+      "&.Mui-disabled + .MuiSwitch-track": {
         opacity: 0.5,
       },
     },
-    '&.Mui-focusVisible .MuiSwitch-thumb': {
-      color: '#33cf4d',
-      border: '6px solid #fff',
+    "&.Mui-focusVisible .MuiSwitch-thumb": {
+      color: "#33cf4d",
+      border: "6px solid #fff",
     },
-    '&.Mui-disabled .MuiSwitch-thumb': {
+    "&.Mui-disabled .MuiSwitch-thumb": {
       color:
-        theme.palette.mode === 'light'
+        theme.palette.mode === "light"
           ? theme.palette.grey[100]
           : theme.palette.grey[600],
     },
-    '&.Mui-disabled + .MuiSwitch-track': {
-      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
     },
   },
-  '& .MuiSwitch-thumb': {
-    boxSizing: 'border-box',
+  "& .MuiSwitch-thumb": {
+    boxSizing: "border-box",
     width: 22,
     height: 22,
   },
-  '& .MuiSwitch-track': {
+  "& .MuiSwitch-track": {
     borderRadius: 26 / 2,
-    backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+    backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
     opacity: 1,
-    transition: theme.transitions.create(['background-color'], {
+    transition: theme.transitions.create(["background-color"], {
       duration: 500,
     }),
   },
@@ -126,26 +130,33 @@ const CommonTable = ({ columns, data = [], action }) => {
             />
           )}
           {onOff && (
-             <FormControlLabel
-             control={<IOSSwitch checked={row.isActive === 0 ? true : false}
-              onChange={(e) => {
-                console.log(e.target.value);
-                if (action && action.onOff) {
-                  action.onOff(index, row);
-                }
-              }} />}
-             
-           />
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  checked={row.isActive === 0 ? true : false}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    if (action && action.onOff) {
+                      action.onOff(index, row);
+                    }
+                  }}
+                />
+              }
+            />
           )}
           {onCall && (
             <a href={"tel:" + row.mobileNo}>
-            <PhoneIcon size="19" className="nav-linker"/>
-           </a>
+              <PhoneIcon size="19" className="nav-linker" />
+            </a>
           )}
           {onWP && (
-            <a target={"_blank"} rel="noopener noreferrer" href={"https://api.whatsapp.com/send?phone=" + row.mobileNo}>
-            <WhatsAppIcon size="19" className="nav-linker"/>
-           </a>
+            <a
+              target={"_blank"}
+              rel="noopener noreferrer"
+              href={"https://api.whatsapp.com/send?phone=" + row.mobileNo}
+            >
+              <WhatsAppIcon size="19" className="nav-linker" />
+            </a>
           )}
           {onEdit && (
             <EditIcon
@@ -191,8 +202,6 @@ const CommonTable = ({ columns, data = [], action }) => {
                 }
               }}
             />
-             
-           
           )}
           {onPayment && (
             <PaymentIcon

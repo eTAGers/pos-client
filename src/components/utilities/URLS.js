@@ -41,5 +41,8 @@ export const URLS = {
   getInvoice: `${baseUrl}getInvoice`,
   deleteInvoice: `${baseUrl}deleteInvoice`,
   updateInvoice: `${baseUrl}updateInvoice`,
-
+  getDealer: `${baseUrl}getDealer`,
+  addDealer: `${baseUrl}addDealer`,
+  addPO: `${baseUrl}addPO`,
+  getPO: `${baseUrl}getPO`,
 };
